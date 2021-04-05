@@ -1,32 +1,35 @@
 #include <ezButton.h>
 
-#define NUM_INPUTPINS 4
-#define NUM_OUTPUTPINS 4 
-#define NUM_EZBUTTONS 4
-#define DEBOUNCE 50
+#define ARRAYSIZE(x) ((sizeof(x) / sizeof(*(x))))
 
+#define NUM_INPUTPINS 4
 int inputPins[NUM_INPUTPINS] = {A0, A1, A2, A3};
+
+#define NUM_OUTPUTPINS 4 
 int outputPins[NUM_OUTPUTPINS] = {0, 1, 2, 3};
 
-ezButton b1(A0);
-ezButton b2(A1);
-ezButton b3(A2);
-ezButton b4(A3);
+ezButton b0(A0);
+ezButton b1(A1);
+ezButton b2(A2);
+ezButton b3(A3);
 
-ezButton ezbs[NUM_EZBUTTONS] = {b1, b2, b3, b4};
-uint8_t ezbsState[NUM_EZBUTTONS] = {LOW};
+#define NUM_BUTTONS 4
+ezButton buttons[NUM_BUTTONS] = {b0, b1, b2, b3};
+uint8_t buttonStates[NUM_BUTTONS] = {LOW};
+
+#define DEBOUNCE 50
 
 void setup() {
 
-    for (int i=0; i < (sizeof(outputPins) / sizeof(outputPins[0])); i++) {
+    for (int i=0; i < ARRAYSIZE(outputPins); i++) {
 
         pinMode(outputPins[i], OUTPUT);
 
     }
 
-    for (int i=0; i < (sizeof(ezbs) / sizeof(ezbs[0])); i++) {
+    for (int i=0; i < ARRAYSIZE(buttons); i++) {
 
-        ezbs[i].setDebounceTime(DEBOUNCE);
+        buttons[i].setDebounceTime(DEBOUNCE);
 
     }
 
@@ -34,18 +37,13 @@ void setup() {
 
 void loop() {
 
-    for (int i=0; i < (sizeof(ezbs) / sizeof(ezbs[0])); i++) {
+    for (int i=0; i < ARRAYSIZE(buttons); i++) {
 
-        ezbs[i].loop();
+        buttons[i].loop();
+        if (buttons[i].isPressed()) {
 
-    }
-
-    for (int i=0; i < (sizeof(ezbs) / sizeof(ezbs[0])); i++) {
-
-        if (ezbs[i].isPressed()) {
-
-            ezbsState[i] = !ezbsState[i];
-            digitalWrite(outputPins[i], ezbsState[i]);
+            buttonStates[i] = !buttonStates[i];
+            digitalWrite(outputPins[i], buttonStates[i]);
 
         }
         
