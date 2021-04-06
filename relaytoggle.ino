@@ -2,23 +2,11 @@
 
 #define ARRAYSIZE(x) ((sizeof(x) / sizeof(*(x))))
 
-/*  Declare Input Pins
-`*
- *  NUM_INPUTPINS must match the number of pins in
- *  the array
- * 
- */
-#define NUM_INPUTPINS 4
-int inputPins[NUM_INPUTPINS] = {A0, A1, A2, A3};
+/*  Declare Input Pins  */
+int inputPins[] = {A0, A1, A2, A3};
 
-/*  Declare Output Pins
- *
- *  NUM_OUTPUTPINS must match the number of pins in
- *  the array
- * 
- */
-#define NUM_OUTPUTPINS 4 
-int outputPins[NUM_OUTPUTPINS] = {0, 1, 2, 3};
+/*  Declare Output Pins  */
+int outputPins[] = {0, 1, 2, 3};
 
 /*  Assign Input Pins to Buttons
  *
@@ -31,18 +19,11 @@ ezButton b1(A1);
 ezButton b2(A2);
 ezButton b3(A3);
 
-/*  Add Buttons 
- *
- *  Add button names to be used
- *  NUM_BUTTONS must match the number of buttons in 
- *  the array
- * 
- */
-#define NUM_BUTTONS 4
-ezButton buttons[NUM_BUTTONS] = {b0, b1, b2, b3};
+/*  Add Buttons  */
+ezButton buttons[] = {b0, b1, b2, b3};
 
 /*  Initialize Button State  */
-uint8_t buttonStates[NUM_BUTTONS] = {LOW};
+uint8_t buttonStates[ARRAYSIZE(buttons)] = {LOW};
 
 /*  Set ezButton Debounce Time in Milliseconds  */
 #define DEBOUNCE 50
